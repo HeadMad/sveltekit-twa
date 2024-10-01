@@ -9,7 +9,7 @@
 
   async function openScanner() {
       const promise = qrScanner.open({
-        text: "Scan the QR",
+        text: "Сканируй это",
         onCaptured(qr) {
             qrScanner.close();
             result = qr;
