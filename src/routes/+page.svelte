@@ -5,34 +5,14 @@
 
   // const { initDataRaw } = retrieveLaunchParams();
 
-  var result = "";
+  var result;
+  let code = ''
 
   async function openScanner() {
-    // setTimeout(() => {
-    //   qrScanner.close();
-    // }, 3000)
-    // if (qrScanner.open.isSupported()) {
-      // Getting the first captured QR.
-      // qrScanner.isOpened(); // false
-      // let promise = qrScanner.open({ text: "Scan any QR" });
-      // qrScanner.isOpened(); // true
-      // await promise;
-      // qrScanner.isOpened(); // false
-
-      // Getting some specific QR.
-      qrScanner.isOpened(); // false
-     let  promise = qrScanner.open({
-        text: "Scan some specific QR",
-        onCaptured(qr) {
-          qrScanner.close();
-          result = qr;
-          return qr === "some-specific-qr";
-        },
-      });
-
-      qrScanner.isOpened(); // true
-      await promise;
-      qrScanner.isOpened(); // false
+     result = await qrScanner.open({text: "Scan some specific QR"}).then(qr => {
+      code = qr;
+      qrScanner.close();
+     });
     }
   // }
 </script>
@@ -40,7 +20,7 @@
 <!-- {initDataRaw} -->
 
 <h1>Scanner</h1>
-ScannerResult: {result}
+ScannerResult: {code}
 
 <br />
 <button on:click={openScanner}>Open Scanner</button>
