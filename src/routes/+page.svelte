@@ -23,7 +23,7 @@
       qrScanner.isOpened(); // false
      let  promise = qrScanner.open({
         text: "Scan some specific QR",
-        capture(qr) {
+        onCaptured(qr) {
           qrScanner.close();
           result = qr;
           return qr === "some-specific-qr";
