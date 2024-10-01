@@ -8,7 +8,7 @@
   var result = "";
 
   async function openScanner() {
-    if (qrScanner.open.isSupported()) {
+    // if (qrScanner.open.isSupported()) {
       // Getting the first captured QR.
       qrScanner.isOpened(); // false
       let promise = qrScanner.open({ text: "Scan any QR" });
@@ -29,7 +29,7 @@
       await promise;
       qrScanner.isOpened(); // false
     }
-  }
+  // }
 </script>
 
 <!-- {initDataRaw} -->
