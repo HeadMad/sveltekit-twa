@@ -8,9 +8,9 @@
   var result = "";
 
   async function openScanner() {
-    setTimeout(() => {
-      qrScanner.close();
-    }, 3000)
+    // setTimeout(() => {
+    //   qrScanner.close();
+    // }, 3000)
     // if (qrScanner.open.isSupported()) {
       // Getting the first captured QR.
       // qrScanner.isOpened(); // false
