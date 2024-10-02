@@ -1,5 +1,8 @@
 <script>
   import { qrScanner } from "@telegram-apps/sdk";
+  import { backButton } from '@telegram-apps/sdk';
+
+backButton.show();
 
   // import { retrieveLaunchParams } from '@telegram-apps/sdk';
 
