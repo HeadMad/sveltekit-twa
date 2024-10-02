@@ -11,25 +11,24 @@
     isBackButtonVisible,
   } from "@telegram-apps/sdk";
   mountBackButton();
-  let errorMessage = '';
-try {
+  let popupErrorMessage = "";
 
   async function popupOpen() {
-    const promise = openPopup({
-      title: "Hello!",
-      message: "Here is a test message.",
-      buttons: [{ id: "my-id", type: "default", text: "Default text" }],
-    });
-    // isPopupOpened() -> true
-    const buttonId = await promise;
+    try {
+      const promise = openPopup({
+        title: "Hello!",
+        message: "Here is a test message.",
+        buttons: [{ id: "my-id", type: "default", text: "Default text" }],
+      });
+      // isPopupOpened() -> true
+      const buttonId = await promise;
+    } catch (error) {
+      popupErrorMessage = error.message;
+    }
   }
-} catch (error) {
-  
-}
 </script>
 
 <h1>TWA SDK</h1>
-{@debug errorMessage}
 
 <h2>BackButton</h2>
 <button
@@ -43,6 +42,7 @@ try {
 </ul>
 
 <h2>Popup</h2>
+{@debug popupErrorMessage}
 <button on:click={popupOpen}>Open Popup</button>
 <ul>
   <li>Is Supported: {isPopupSupported()}</li>
