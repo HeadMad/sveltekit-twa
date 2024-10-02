@@ -1,29 +1,15 @@
 <script>
-  import { qrScanner } from "@telegram-apps/sdk";
-  import { backButton } from '@telegram-apps/sdk';
-
-backButton.show();
-
-  // import { retrieveLaunchParams } from '@telegram-apps/sdk';
-
-  // const { initDataRaw } = retrieveLaunchParams();
-
-  var result;
-  let code = ''
-
-  async function openScanner() {
-     result = await qrScanner.open({text: "Scan some specific QR"}).then(qr => {
-      code = qr;
-      qrScanner.close();
-     });
-    }
-  // }
+  import { backButton, init } from "@telegram-apps/sdk";
+  init();
+  backButton.mount();
 </script>
 
-<!-- {initDataRaw} -->
+<h1>TWA SDK</h1>
 
-<h1>Scanner</h1>
-ScannerResult: {code}
-
-<br />
-<button on:click={openScanner}>Open Scanner</button>
+<h2>BackButton</h2>
+<button on:click={() => backButton.isVisible() ? backButton.hide() : backButton.show()}>Toggle</button>
+<ul>
+  <li>Is Supported: {backButton.isSupported()}</li>
+  <li>Is Mounted: {backButton.isMounted()}</li>
+  <li>Is Visible: {backButton.isVisible()}</li>
+</ul>
