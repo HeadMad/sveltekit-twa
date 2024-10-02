@@ -11,6 +11,8 @@
     isBackButtonVisible,
   } from "@telegram-apps/sdk";
   mountBackButton();
+  let errorMessage = '';
+try {
 
   async function popupOpen() {
     const promise = openPopup({
@@ -21,9 +23,13 @@
     // isPopupOpened() -> true
     const buttonId = await promise;
   }
+} catch (error) {
+  
+}
 </script>
 
 <h1>TWA SDK</h1>
+{@debug errorMessage}
 
 <h2>BackButton</h2>
 <button
