@@ -1,15 +1,18 @@
 <script>
-  import { backButton, init } from "@telegram-apps/sdk";
-  init();
-  backButton.mount();
+  import { isBackButtonSupported , mountBackButton, isBackButtonMounted, showBackButton,
+  hideBackButton,
+  isBackButtonVisible, } from '@telegram-apps/sdk';
+
+  mountBackButton();
+
 </script>
 
 <h1>TWA SDK</h1>
 
 <h2>BackButton</h2>
-<button on:click={() => backButton.isVisible() ? backButton.hide() : backButton.show()}>Toggle</button>
+<button on:click={() => isBackButtonVisible() ? hideBackButton() : showBackButton()}>Toggle</button>
 <ul>
-  <li>Is Supported: {backButton.isSupported()}</li>
-  <li>Is Mounted: {backButton.isMounted()}</li>
-  <li>Is Visible: {backButton.isVisible()}</li>
+  <li>Is Supported: {isBackButtonSupported()}</li>
+  <li>Is Mounted: {isBackButtonMounted()}</li>
+  <li>Is Visible: {isBackButtonVisible()}</li>
 </ul>
