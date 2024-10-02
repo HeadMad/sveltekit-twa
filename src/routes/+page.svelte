@@ -37,5 +37,8 @@
 </ul>
 
 <h2>Popup</h2>
-
 <button on:click={popupOpen}>Open Popup</button>
+<ul>
+  <li>Is Supported: {isPopupSupported()}</li>
+  <li>Is Opened: {isPopupOpened()}</li>
+</ul>
