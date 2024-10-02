@@ -1,8 +1,8 @@
 <script>
-  import { isBackButtonSupported , mountBackButton, isBackButtonMounted, showBackButton,
+  import { init, isBackButtonSupported , mountBackButton, isBackButtonMounted, showBackButton,
   hideBackButton,
   isBackButtonVisible, } from '@telegram-apps/sdk';
-
+init();
   mountBackButton();
 
 </script>
