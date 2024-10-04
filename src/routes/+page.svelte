@@ -21,7 +21,7 @@
         ],
       })
     });
-    
+
     return () => {};
   });
 
@@ -40,11 +40,13 @@
    * @param {function} callback
    */
   function on(event, callback) {
-    window.addEventListener("message", ({ data }) => {
-      const { eventType, eventData } = JSON.parse(data);
-      if (eventType === event) {
-        return callback(eventData);
-      }
+    window.addEventListener("message", (event) => {
+      console.log(event)
+      // const { eventType, eventData } = JSON.parse(data);
+      // console.log(eventType, eventData);
+      // if (eventType === event) {
+      //   return callback(eventData);
+      // }
     });
   }
 
