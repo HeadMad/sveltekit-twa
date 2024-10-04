@@ -1,50 +1,74 @@
 <script>
-  import {
-    isPopupSupported,
-    isPopupOpened,
-    openPopup,
-    isBackButtonSupported,
-    mountBackButton,
-    isBackButtonMounted,
-    showBackButton,
-    hideBackButton,
-    isBackButtonVisible,
-  } from "@telegram-apps/sdk";
-  mountBackButton();
-  let popupErrorMessage = "";
+  import { onMount } from "svelte";
 
-  async function popupOpen() {
-    try {
-      const promise = openPopup({
-        title: "Hello!",
-        message: "Here is a test message.",
-        buttons: [{ id: "my-id", type: "default", text: "Default text" }],
-      });
-      // isPopupOpened() -> true
-      const buttonId = await promise;
-    } catch (error) {
-      popupErrorMessage = error.message;
-    }
+  onMount(() => {
+    postEvent("web_app_setup_main_button", {
+      is_visible: true,
+      text: "Сканировать",
+      is_active: true,
+    })
+
+    on("main_button_pressed", () => {
+      postEvent("web_app_open_popup", {
+        title: "Сканируй это",
+        message: "Сканируй qr код",
+        buttons: [
+          {
+            id: "ok",
+            text: "Отмена",
+            type: 'ok'
+          },
+        ],
+      })
+    });
+    
+    return () => {};
+  });
+
+  /**
+   * 
+   * @param {string} event
+   * @param {Object} data
+   */
+  function postEvent(event, data = {}) {
+    return window.TelegramWebviewProxy.postEvent(event, JSON.stringify(data));
+  }
+
+  /**
+   * 
+   * @param {string} event
+   * @param {function} callback
+   */
+  function on(event, callback) {
+    window.addEventListener("message", ({ data }) => {
+      const { eventType, eventData } = JSON.parse(data);
+      if (eventType === event) {
+        return callback(eventData);
+      }
+    });
+  }
+
+  let data = '';
+
+  function openPopup() {
+    postEvent("web_app_open_scan_qr_popup", {
+      text: "Сканируй это",
+    });
+    on('qr_text_received', (qrData) => {
+      data = qrData;
+    });
+
+    postEvent('web_app_close_scan_qr_popup');
   }
 </script>
 
-<h1>TWA SDK</h1>
+<br />
+Data: {data};
+<br>
+<button on:click={openPopup}>Open</button>
 
-<h2>BackButton</h2>
-<button
-  on:click={() => (isBackButtonVisible() ? hideBackButton() : showBackButton())}
-  >Toggle</button
->
-<ul>
-  <li>Is Supported: {isBackButtonSupported()}</li>
-  <li>Is Mounted: {isBackButtonMounted()}</li>
-  <li>Is Visible: {isBackButtonVisible()}</li>
-</ul>
-
-<h2>Popup</h2>
-{@debug popupErrorMessage}
-<button on:click={popupOpen}>Open Popup</button>
-<ul>
-  <li>Is Supported: {isPopupSupported()}</li>
-  <li>Is Opened: {isPopupOpened()}</li>
-</ul>
+<style>
+  button {
+    padding: 1em 2em;
+  }
+</style>
