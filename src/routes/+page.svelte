@@ -25,9 +25,9 @@
 </script>
 
 
+Check token <br>
 Form: {JSON.stringify(form)}
 <br>
-{}
 <pre>
   {JSON.stringify(hash, null, 2)}
 </pre>
