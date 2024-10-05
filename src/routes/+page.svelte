@@ -1,73 +1,34 @@
 <script>
   import { onMount } from "svelte";
+  export let data;
+  export let form;
+
+  let hash = '';
 
   onMount(() => {
-    postEvent("web_app_setup_main_button", {
-      is_visible: true,
-      text: "Сканировать",
-      is_active: true,
-    })
-
-    on("main_button_pressed", () => {
-      postEvent("web_app_open_popup", {
-        title: "Сканируй это",
-        message: "Сканируй qr код",
-        buttons: [
-          {
-            id: "ok",
-            text: "Отмена",
-            type: 'ok'
-          },
-        ],
-      })
+    hash = window.location.hash;
+    Telegram.WebApp.MainButton.setText('Open Scan'); 
+    Telegram.WebApp.MainButton.onClick(() => {
+      Telegram.WebApp.showScanQrPopup({
+        text: 'Сканируй это'
+      }, (qr) => {
+        data = qr;
+        return true;
+      });
     });
-
-    return () => {};
+    Telegram.WebApp.MainButton.show();
   });
-
-  /**
-   * 
-   * @param {string} event
-   * @param {Object} data
-   */
-  function postEvent(event, data = {}) {
-    return window.TelegramWebviewProxy.postEvent(event, JSON.stringify(data));
-  }
-
-  /**
-   * 
-   * @param {string} event
-   * @param {function} callback
-   */
-  function on(event, callback) {
-    window.addEventListener("message", (event) => {
-      console.log(event)
-      // const { eventType, eventData } = JSON.parse(data);
-      // console.log(eventType, eventData);
-      // if (eventType === event) {
-      //   return callback(eventData);
-      // }
-    });
-  }
-
-  let data = '';
-
-  function openPopup() {
-    postEvent("web_app_open_scan_qr_popup", {
-      text: "Сканируй это",
-    });
-    on('qr_text_received', (qrData) => {
-      data = qrData;
-    });
-
-    postEvent('web_app_close_scan_qr_popup');
-  }
 </script>
 
-<br />
-Data: {data};
+
+Form: {JSON.stringify(form)}
 <br>
-<button on:click={openPopup}>Open</button>
+
+<form action="?/check" method="POST">
+  <input type="hidden" name="data" value={hash}>
+  <button type="submit">Check</button>
+</form>
+
 
 <style>
   button {
