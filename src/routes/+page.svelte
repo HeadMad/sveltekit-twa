@@ -24,12 +24,9 @@
   });
 </script>
 
-
-Check token <br>
-Form: {JSON.stringify(form)}
-<br>
+Form: 
 <pre>
-  {JSON.stringify(hash, null, 2)}
+  {JSON.stringify(form, null, 2)}
 </pre>
 
 <form action="?/check" method="POST">

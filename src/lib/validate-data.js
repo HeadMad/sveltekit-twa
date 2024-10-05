@@ -18,8 +18,9 @@ export default function (token, rawData) {
   const secretKey  = createHmac('sha256', 'WebAppData').update(token).digest();
   const hexHash = createHmac('sha256', secretKey).update(data).digest('hex');
 
+
   if (hexHash !== result.hash)
-    return null;
+    return {hexHash, hash: result.hash, data};
 
   return result;
 }
