@@ -14,7 +14,9 @@ export const actions = {
   check: async ({ request }) => {
     try {
       const data = await request.formData();
+
       const token = process.env.BOT_TOKEN;
+      return {token}
       const rawData = data.get('data');
       const result = validateData(token, rawData);
       if (!result)

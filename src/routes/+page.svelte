@@ -6,7 +6,11 @@
   let hash = '';
 
   onMount(() => {
-    hash = window.location.hash;
+    hash = window.location.hash.slice(1).split('&').reduce((acc, item) => {
+      const [key, val] = item.split('=');
+      acc[key] = decodeURIComponent(val);
+      return acc;
+    });
     Telegram.WebApp.MainButton.setText('Open Scan'); 
     Telegram.WebApp.MainButton.onClick(() => {
       Telegram.WebApp.showScanQrPopup({
@@ -23,6 +27,10 @@
 
 Form: {JSON.stringify(form)}
 <br>
+{}
+<pre>
+  {JSON.stringify(hash, null, 2)}
+</pre>
 
 <form action="?/check" method="POST">
   <input type="hidden" name="data" value={hash}>

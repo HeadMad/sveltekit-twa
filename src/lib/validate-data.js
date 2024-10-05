@@ -6,6 +6,7 @@ export default function (token, rawData) {
     
   const entries = rawData.split('&').sort()
     .map(keyVal => keyVal.split('=').map(decodeURIComponent));
+    
   const data = entries
     .filter(item => item[0] !== 'hash')
     .map(([key, val]) => key + '=' + val)
