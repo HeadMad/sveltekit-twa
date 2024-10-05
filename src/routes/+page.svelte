@@ -6,11 +6,7 @@
   let hash = '';
 
   onMount(() => {
-    hash = window.location.hash.slice(1).split('&').reduce((acc, item) => {
-      const [key, val] = item.split('=');
-      acc[key] = decodeURIComponent(val);
-      return acc;
-    });
+    hash = Telegram.WebApp.initData;
     Telegram.WebApp.MainButton.setText('Open Scan'); 
     Telegram.WebApp.MainButton.onClick(() => {
       Telegram.WebApp.showScanQrPopup({
