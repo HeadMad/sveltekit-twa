@@ -20,7 +20,7 @@ export default function (token, rawData) {
 
 
   if (hexHash !== result.hash)
-    return {hexHash, hash: result.hash, data};
+    return {hexHash, entries, hash: result.hash, data};
 
   return result;
 }
